@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-workflow-builder.com/schemas/workflow.json",
+  "title": "Workflow",
+  "description": "A complete workflow definition with nodes, edges, and variables",
+  "type": "object",
+  "required": ["id", "name", "version", "nodes", "edges"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique workflow identifier",
+      "pattern": "^[a-zA-Z0-9-_]+$"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable workflow name",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional workflow description"
+    },
+    "version": {
+      "type": "string",
+      "description": "Workflow version (semver)",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "settings": {
+      "type": "object",
+      "properties": {
+        "errorHandling": {
+          "type": "string",
+          "enum": ["stopOnError", "continueOnError", "retry"]
+        },
+        "maxRetries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "timeout": {
+          "type": "integer",
+          "description": "Workflow timeout in milliseconds",
+          "minimum": 0
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "description": "Array of workflow nodes",
+      "items": {
+        "$ref": "node.json"
+      },
+      "minItems": 1
+    },
+    "edges": {
+      "type": "array",
+      "description": "Array of connections between nodes",
+      "items": {
+        "$ref": "edge.json"
+      }
+    },
+    "variables": {
+      "type": "array",
+      "description": "Shared workflow variables",
+      "items": {
+        "$ref": "variable.json"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

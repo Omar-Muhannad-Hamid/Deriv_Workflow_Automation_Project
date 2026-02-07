@@ -1,0 +1,113 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-workflow-builder.com/schemas/node.json",
+  "title": "Node",
+  "description": "A single workflow node/module",
+  "type": "object",
+  "required": ["id", "type", "provider", "operation"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique node identifier",
+      "pattern": "^[a-zA-Z0-9-_]+$"
+    },
+    "type": {
+      "type": "string",
+      "description": "Node type category",
+      "enum": [
+        "trigger",
+        "action",
+        "condition",
+        "loop",
+        "transform",
+        "api",
+        "database",
+        "notification",
+        "integration"
+      ]
+    },
+    "provider": {
+      "type": "string",
+      "description": "Service provider (e.g., gmail, slack, http)",
+      "examples": ["gmail", "slack", "http", "postgres", "mongodb"]
+    },
+    "operation": {
+      "type": "string",
+      "description": "Specific operation to perform",
+      "examples": ["sendEmail", "postMessage", "getRequest", "query"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable node name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Node description"
+    },
+    "position": {
+      "type": "object",
+      "description": "Node position in visual editor",
+      "required": ["x", "y"],
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      }
+    },
+    "inputs": {
+      "type": "object",
+      "description": "Node input parameters",
+      "additionalProperties": true
+    },
+    "outputs": {
+      "type": "object",
+      "description": "Node output schema",
+      "additionalProperties": true
+    },
+    "runtime": {
+      "type": "object",
+      "description": "Runtime configuration",
+      "properties": {
+        "timeout": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10
+        },
+        "continueOnError": {
+          "type": "boolean"
+        }
+      }
+    },
+    "credentials": {
+      "type": "object",
+      "description": "Reference to credentials",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "description": "Conditional execution rules",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "expression": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

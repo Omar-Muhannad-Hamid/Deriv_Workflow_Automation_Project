@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://ai-workflow-builder.com/schemas/edge.json",
+  "title": "Edge",
+  "description": "Connection between two nodes",
+  "type": "object",
+  "required": ["id", "source", "target"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique edge identifier",
+      "pattern": "^[a-zA-Z0-9-_]+$"
+    },
+    "source": {
+      "type": "string",
+      "description": "Source node ID"
+    },
+    "target": {
+      "type": "string",
+      "description": "Target node ID"
+    },
+    "sourceHandle": {
+      "type": "string",
+      "description": "Specific output handle on source node"
+    },
+    "targetHandle": {
+      "type": "string",
+      "description": "Specific input handle on target node"
+    },
+    "type": {
+      "type": "string",
+      "description": "Edge type",
+      "enum": ["default", "conditional", "error", "success"],
+      "default": "default"
+    },
+    "condition": {
+      "type": "object",
+      "description": "Conditional edge execution",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "expression": {
+          "type": "string",
+          "description": "JavaScript expression to evaluate"
+        }
+      }
+    },
+    "label": {
+      "type": "string",
+      "description": "Edge label for visualization"
+    }
+  }
+}
